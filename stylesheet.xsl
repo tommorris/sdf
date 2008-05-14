@@ -5,12 +5,12 @@
     <xsl:template match="h:html">
         <fo:root>
             <fo:layout-master-set>
-                <fo:simple-page-master master-name="A4">
-                    <!-- Page template goes here -->
+                <fo:simple-page-master master-name="A4" margin="0.5in">
+                    <fo:region-body />
                 </fo:simple-page-master>
             </fo:layout-master-set>
             <fo:page-sequence master-reference="A4">
-                <fo:flow>
+                <fo:flow flow-name="xsl-region-body">
                     <xsl:apply-templates select="h:body" />
                 </fo:flow>
             </fo:page-sequence>
@@ -28,7 +28,7 @@
         </fo:block>
     </xsl:template>
     <xsl:template match="h:em | h:i">
-        <fo:inline font-variant="italic">
+        <fo:inline font-style="italic">
             <xsl:apply-templates/>
         </fo:inline>
     </xsl:template>
@@ -37,6 +37,16 @@
             <xsl:apply-templates/>
         </fo:inline>
     </xsl:template>
+		<xsl:template match="h:hr">
+				<fo:block>
+						<fo:leader leader-pattern="rule" />
+				</fo:block>
+		</xsl:template>
+		<xsl:template match="h:kbd">
+				<fo:inline font-family="monospace" font-size="110%">
+						<xsl:apply-templates />
+				</fo:inline>
+		</xsl:template>
     <xsl:template match="text()">
         <xsl:copy>
             <xsl:apply-templates />
